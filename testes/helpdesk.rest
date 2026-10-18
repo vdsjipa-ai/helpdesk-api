@@ -1,0 +1,31 @@
+@base=http://localhost:3000
+
+### TESTE DA ROTA INICIAL
+GET {{base}}/
+
+###
+### === SPRINT 1: CONSULTAS BASE ===
+###
+
+### 1. Buscar Categorias
+GET {{base}}/categorias
+
+### 2. Buscar Técnicos
+GET {{base}}/tecnicos
+
+###
+### === SPRINT 2: SOLICITANTES ===
+###
+
+### 1. Cadastrar um Solicitante válido
+POST {{base}}/solicitantes
+Content-Type: application/json
+
+{
+    "nome": "Ana Souza",
+    "email": "ana.souza@empresa.com",
+    "setor": "Financeiro"
+}
+
+### 2. Listar Solicitantes do Banco
+GET {{base}}/solicitantes
