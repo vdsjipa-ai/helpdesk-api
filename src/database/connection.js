@@ -1,22 +1,21 @@
-const mysql = require('mysql2');
+require('dotenv').config();
+const mysql = require('mysql2/promise');
 
-// Configura os dados do seu MySQL local criado no DBeaver
-const conexao = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '', // Padrão do XAMPP (sem senha)
-    database: 'helpdesk_db' // Nome do banco que criamos no DBeaver
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
-// Executa a conexão e exibe o status no terminal
-conexao.connect((erro) => {
-    if (erro) {
-        console.error('Erro ao conectar ao banco de dados:', erro.message);
-    } else {
+// Testa a conexão ao iniciar e mostra o status no terminal
+pool.getConnection()
+    .then((conn) => {
         console.log('🔗 Conexão com o banco de dados MySQL realizada com sucesso!');
-    }
-});
+        conn.release();
+    })
+    .catch((erro) => {
+        console.error('Erro ao conectar ao banco de dados:', erro.message);
+    });
 
-// Exporta a conexão para podermos usar nas rotas
-module.exports = conexao;
-
+module.exports = pool;

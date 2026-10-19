@@ -107,5 +107,23 @@ router.get('/chamados', async (req, res) => {
         res.status(500).json({ erro: err.message });
     }
 });
+// GET /categorias - Listar categorias
+router.get('/categorias', async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM categorias');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ erro: err.message });
+    }
+});
 
+// GET /tecnicos - Listar técnicos
+router.get('/tecnicos', async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM tecnicos');
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ erro: err.message });
+    }
+});
 module.exports = router;
