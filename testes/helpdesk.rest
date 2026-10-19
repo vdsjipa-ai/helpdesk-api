@@ -55,3 +55,84 @@ GET {{base}}/solicitantes/9999
 
 ### 7. Excluir solicitante
 DELETE {{base}}/solicitantes/1
+
+###
+### === CHAMADOS ===
+###
+
+### 1. Criar chamado válido (esperado 201)
+POST {{base}}/chamados
+Content-Type: application/json
+
+{
+    "titulo": "Computador não inicia",
+    "descricao": "O computador do financeiro não liga.",
+    "prioridade": "ALTA",
+    "solicitante_id": 2,
+    "categoria_id": 1
+}
+
+### 2. Listar chamados (200)
+GET {{base}}/chamados
+
+### 3. Buscar chamado por id (200)
+GET {{base}}/chamados/1
+
+### 4. Erro: chamado inexistente (404)
+GET {{base}}/chamados/9999
+
+### 5. Erro: EM_ATENDIMENTO sem técnico (400)
+PUT {{base}}/chamados/1
+Content-Type: application/json
+
+{
+    "status": "EM_ATENDIMENTO"
+}
+
+### 6. Atribuir técnico e colocar em atendimento (200)
+PUT {{base}}/chamados/1
+Content-Type: application/json
+
+{
+    "tecnico_id": 1,
+    "status": "EM_ATENDIMENTO"
+}
+
+### 7. Erro: técnico inexistente (404)
+PUT {{base}}/chamados/1
+Content-Type: application/json
+
+{
+    "tecnico_id": 999
+}
+
+### 8. Erro: concluir sem solução (400)
+PUT {{base}}/chamados/1
+Content-Type: application/json
+
+{
+    "status": "CONCLUIDO"
+}
+
+### 9. Concluir com solução (200)
+PUT {{base}}/chamados/1
+Content-Type: application/json
+
+{
+    "status": "CONCLUIDO",
+    "solucao": "Fonte de alimentação substituída."
+}
+
+### 10. Erro: status inválido (400)
+PUT {{base}}/chamados/1
+Content-Type: application/json
+
+{
+    "status": "PENDENTE"
+}
+
+### 11. Filtro por status (200)
+GET {{base}}/chamados?status=CONCLUIDO
+
+### 12. Excluir chamado (200) - deixe por último
+DELETE {{base}}/chamados/1
