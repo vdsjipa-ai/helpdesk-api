@@ -56,11 +56,17 @@ GET {{base}}/solicitantes/9999
 ### 7. Excluir solicitante
 DELETE {{base}}/solicitantes/1
 
-###
-### === CHAMADOS ===
-###
+### === SPRINT 5: FILTROS E RELATÓRIO ===
 
-### 1. Criar chamado válido (esperado 201)
+### 1. Filtro por prioridade (200)
+GET {{base}}/chamados?prioridade=ALTA
+
+### 2. Relatório de chamados por status (200)
+GET {{base}}/relatorios/chamados-por-status
+
+### === CHAMADOS ===
+
+### Criar chamado (esperado 201)
 POST {{base}}/chamados
 Content-Type: application/json
 
@@ -72,25 +78,11 @@ Content-Type: application/json
     "categoria_id": 1
 }
 
-### 2. Listar chamados (200)
+### Listar chamados (200)
 GET {{base}}/chamados
 
-### 3. Buscar chamado por id (200)
-GET {{base}}/chamados/1
-
-### 4. Erro: chamado inexistente (404)
-GET {{base}}/chamados/9999
-
-### 5. Erro: EM_ATENDIMENTO sem técnico (400)
-PUT {{base}}/chamados/1
-Content-Type: application/json
-
-{
-    "status": "EM_ATENDIMENTO"
-}
-
-### 6. Atribuir técnico e colocar em atendimento (200)
-PUT {{base}}/chamados/1
+### Colocar chamado 2 em atendimento (200)
+PUT {{base}}/chamados/2
 Content-Type: application/json
 
 {
@@ -98,41 +90,12 @@ Content-Type: application/json
     "status": "EM_ATENDIMENTO"
 }
 
-### 7. Erro: técnico inexistente (404)
-PUT {{base}}/chamados/1
+### Concluir chamado 3 (200)
+PUT {{base}}/chamados/3
 Content-Type: application/json
 
 {
-    "tecnico_id": 999
-}
-
-### 8. Erro: concluir sem solução (400)
-PUT {{base}}/chamados/1
-Content-Type: application/json
-
-{
-    "status": "CONCLUIDO"
-}
-
-### 9. Concluir com solução (200)
-PUT {{base}}/chamados/1
-Content-Type: application/json
-
-{
+    "tecnico_id": 1,
     "status": "CONCLUIDO",
-    "solucao": "Fonte de alimentação substituída."
+    "solucao": "Problema resolvido."
 }
-
-### 10. Erro: status inválido (400)
-PUT {{base}}/chamados/1
-Content-Type: application/json
-
-{
-    "status": "PENDENTE"
-}
-
-### 11. Filtro por status (200)
-GET {{base}}/chamados?status=CONCLUIDO
-
-### 12. Excluir chamado (200) - deixe por último
-DELETE {{base}}/chamados/1

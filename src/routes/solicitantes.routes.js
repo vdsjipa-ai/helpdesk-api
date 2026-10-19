@@ -81,5 +81,15 @@ router.delete('/solicitantes/:id', async (req, res) => {
         res.status(500).json({ erro: err.message });
     }
 });
-
+// GET /relatorios/chamados-por-status - Quantidade de chamados por status
+router.get('/relatorios/chamados-por-status', async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            'SELECT status, COUNT(*) AS total FROM chamados GROUP BY status'
+        );
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ erro: err.message });
+    }
+});
 module.exports = router;
