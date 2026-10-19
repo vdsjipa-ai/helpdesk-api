@@ -1,15 +1,22 @@
-# HelpDesk API
+## Endpoints
 
-API REST para gestão de chamados de suporte, desenvolvida como Projeto Integrador do curso Desenvolvedor Back-End (Bolsa Futuro Digital).
+### Categorias e técnicos
+- GET /categorias
+- GET /tecnicos
 
-## Tecnologias
+### Solicitantes
+- GET /solicitantes
+- GET /solicitantes/:id
+- POST /solicitantes
+- PUT /solicitantes/:id
+- DELETE /solicitantes/:id
 
-- Node.js
-- Express
-- MySQL
-- mysql2/promise
-- dotenv
+### Chamados
+- POST /chamados
+- GET /chamados (filtros: ?status=ABERTO, ?prioridade=ALTA)
+- GET /chamados/:id
+- PUT /chamados/:id
+- DELETE /chamados/:id
 
-## Como executar
-
-1. Clone o repositório e instale as dependências:
+### Relatórios
+- GET /relatorios/chamados-por-status
