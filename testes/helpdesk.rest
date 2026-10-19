@@ -29,3 +29,29 @@ Content-Type: application/json
 
 ### 2. Listar Solicitantes do Banco
 GET {{base}}/solicitantes
+### 3. Buscar solicitante por ID
+GET {{base}}/solicitantes/1
+
+### 4. Atualizar solicitante
+PUT {{base}}/solicitantes/1
+Content-Type: application/json
+
+{
+    "nome": "Ana Souza Lima",
+    "email": "ana.souza@empresa.com",
+    "setor": "Financeiro"
+}
+
+### 5. Erro esperado: campos faltando (400)
+POST {{base}}/solicitantes
+Content-Type: application/json
+
+{
+    "nome": "Sem Email"
+}
+
+### 6. Erro esperado: id inexistente (404)
+GET {{base}}/solicitantes/9999
+
+### 7. Excluir solicitante
+DELETE {{base}}/solicitantes/1
